@@ -7,6 +7,7 @@ const doneCards = document.querySelector(".column.done .cards");
 let vimMode = false;
 let editingMode = false;
 let activeCard = null;
+let previouslyActiveCard = null;
 
 const keysPressed = new Set();
 
@@ -14,6 +15,33 @@ window.addEventListener("keydown", (event) => {
     keysPressed.add(event.key);
 
     switch (event.key) {
+        case "Tab":
+            event.preventDefault();
+            if (vimMode && !editingMode) {
+                if (todoCards.contains(activeCard)) {
+                    activeCard.classList.remove("active");
+                    activeCard =
+                        doingCards.querySelector(".card") ||
+                        doneCards.querySelector(".card") ||
+                        activeCard;
+                    activeCard.classList.add("active");
+                } else if (doingCards.contains(activeCard)) {
+                    activeCard.classList.remove("active");
+                    activeCard =
+                        doneCards.querySelector(".card") ||
+                        todoCards.querySelector(".card") ||
+                        activeCard;
+                    activeCard.classList.add("active");
+                } else if (doneCards.contains(activeCard)) {
+                    activeCard.classList.remove("active");
+                    activeCard =
+                        todoCards.querySelector(".card") ||
+                        doingCards.querySelector(".card") ||
+                        activeCard;
+                    activeCard.classList.add("active");
+                }
+            }
+            break;
         case "Enter":
             // meh, will fix later
             if (keysPressed.has("Meta") && vimMode && !editingMode) {
@@ -89,11 +117,12 @@ window.addEventListener("keyup", (event) => {
 function handleEscape() {
     if (!vimMode && !editingMode) {
         vimMode = true;
-        activeCard = document.querySelector(".card");
+        activeCard = previouslyActiveCard || document.querySelector(".card");
         activeCard.classList.add("active");
     } else if (vimMode && !editingMode) {
         vimMode = false;
         activeCard.classList.remove("active");
+        previouslyActiveCard = activeCard;
         activeCard = null;
     } else if (vimMode && editingMode) {
         editingMode = false;
