@@ -2,7 +2,10 @@ let vimMode = false;
 let editingMode = false;
 let activeCardIndex = 0;
 
+const keysPressed = new Set();
+
 window.addEventListener("keydown", (event) => {
+    keysPressed.add(event.key);
     switch (event.key) {
         case "Escape":
             handleEscape();
@@ -14,22 +17,38 @@ window.addEventListener("keydown", (event) => {
             vimMode && !editingMode && navigateRight();
             break;
         case "1":
-            vimMode && !editingMode && setCardColor(1);
+            vimMode &&
+                !editingMode &&
+                !keysPressed.has("Meta") &&
+                setCardColor(1);
             break;
         case "2":
-            vimMode && !editingMode && setCardColor(2);
+            vimMode &&
+                !editingMode &&
+                !keysPressed.has("Meta") &&
+                setCardColor(2);
             break;
         case "3":
-            vimMode && !editingMode && setCardColor(3);
+            vimMode &&
+                !editingMode &&
+                !keysPressed.has("Meta") &&
+                setCardColor(3);
             break;
         case "4":
-            vimMode && !editingMode && setCardColor(4);
+            vimMode &&
+                !editingMode &&
+                !keysPressed.has("Meta") &&
+                setCardColor(4);
             break;
         case "i":
             event.preventDefault();
             enterCardInput();
             break;
     }
+});
+
+window.addEventListener("keyup", (event) => {
+    keysPressed.delete(event.key);
 });
 
 function handleEscape() {

@@ -44,8 +44,9 @@ body {
     margin-bottom: 10px;
     resize: none;
     pointer-events: none;
+    overflow: hidden;
     padding: 5px;
-    font-size: 40px;
+    font-size: 36px;
 }
 
 .card.active {
