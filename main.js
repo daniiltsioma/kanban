@@ -8,10 +8,10 @@ window.addEventListener("keydown", (event) => {
             handleEscape();
             break;
         case "h":
-            vimMode && navigateLeft();
+            vimMode && !editingMode && navigateLeft();
             break;
         case "l":
-            vimMode && navigateRight();
+            vimMode && !editingMode && navigateRight();
             break;
         case "1":
             vimMode && !editingMode && setCardColor(1);
