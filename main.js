@@ -1,12 +1,41 @@
+"use strict";
+
+const todoCards = document.querySelector(".column.todo .cards");
+const doingCards = document.querySelector(".column.doing .cards");
+const doneCards = document.querySelector(".column.done .cards");
+
 let vimMode = false;
 let editingMode = false;
-let activeCardIndex = 0;
+let activeCard = null;
 
 const keysPressed = new Set();
 
 window.addEventListener("keydown", (event) => {
     keysPressed.add(event.key);
+
     switch (event.key) {
+        case "Enter":
+            // meh, will fix later
+            if (keysPressed.has("Meta") && vimMode && !editingMode) {
+                const currentCard = document.querySelector(".card.active");
+                if (todoCards.contains(currentCard)) {
+                    doingCards.append(currentCard);
+                } else if (doingCards.contains(currentCard)) {
+                    doneCards.append(currentCard);
+                }
+            }
+            break;
+        case "\\":
+            if (keysPressed.has("Meta") && vimMode && !editingMode) {
+                event.preventDefault();
+                const currentCard = document.querySelector(".card.active");
+                if (doingCards.contains(currentCard)) {
+                    todoCards.appendChild(currentCard);
+                } else if (doneCards.contains(currentCard)) {
+                    doingCards.appendChild(currentCard);
+                }
+            }
+            break;
         case "Escape":
             handleEscape();
             break;
@@ -54,7 +83,7 @@ window.addEventListener("keyup", (event) => {
 function handleEscape() {
     if (!vimMode && !editingMode) {
         vimMode = true;
-        activeCardIndex = 0;
+        activeCard = document.querySelector(".card");
         document.querySelector(".card").classList.add("active");
     } else if (vimMode && !editingMode) {
         vimMode = false;
@@ -66,21 +95,18 @@ function handleEscape() {
 }
 
 function navigateLeft() {
-    if (activeCardIndex > 0) {
-        const currentActive = document.querySelector(".card.active");
-        currentActive.previousElementSibling.classList.add("active");
-        currentActive.classList.remove("active");
-        activeCardIndex--;
+    if (activeCard.previousElementSibling) {
+        activeCard.classList.remove("active");
+        activeCard = activeCard.previousElementSibling;
+        activeCard.classList.add("active");
     }
 }
 
 function navigateRight() {
-    const numberOfCards = document.querySelectorAll(".card").length;
-    if (activeCardIndex < numberOfCards - 1) {
-        const currentActive = document.querySelector(".card.active");
-        currentActive.nextElementSibling.classList.add("active");
-        currentActive.classList.remove("active");
-        activeCardIndex++;
+    if (activeCard.nextElementSibling) {
+        activeCard.classList.remove("active");
+        activeCard = activeCard.nextElementSibling;
+        activeCard.classList.add("active");
     }
 }
 
@@ -107,7 +133,6 @@ function setCardColor(colorIndex) {
 
 function enterCardInput() {
     editingMode = true;
-    const activeCard = document.querySelector(".card.active");
     const cardValueLength = activeCard.value.length;
     activeCard.setSelectionRange(cardValueLength, cardValueLength);
     activeCard.focus();

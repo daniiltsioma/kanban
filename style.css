@@ -9,12 +9,17 @@
 
 body {
     font-family: "Hand me down";
+    padding: 8px 0;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: calc(100vh - 16px);
+}
+
+.column {
+    padding: 0 8px;
 }
 
 .column:not(:last-child) {
@@ -34,14 +39,14 @@ body {
 }
 
 .card {
-    width: 195px;
+    width: 190px;
     height: 140px;
     background-color: #ffff99;
     border: 8px solid transparent;
     font-family: "Hand me down";
     font-weight: bold;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 8px;
+    margin-bottom: 8px;
     resize: none;
     pointer-events: none;
     overflow: hidden;
