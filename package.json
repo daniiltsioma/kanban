@@ -1,0 +1,16 @@
+{
+    "name": "kanban",
+    "type": "module",
+    "version": "1.0.0",
+    "main": "main.js",
+    "scripts": {
+        "dev": "nodemon server.js"
+    },
+    "keywords": [],
+    "author": "Daniil Tsioma",
+    "license": "ISC",
+    "description": "Simple Kanban with vim motions.",
+    "devDependencies": {
+        "nodemon": "^3.1.10"
+    }
+}
