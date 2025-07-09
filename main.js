@@ -12,6 +12,18 @@ window.addEventListener("keydown", (event) => {
         case "l":
             vimMode && navigateRight();
             break;
+        case "1":
+            vimMode && setCardColor(1);
+            break;
+        case "2":
+            vimMode && setCardColor(2);
+            break;
+        case "3":
+            vimMode && setCardColor(3);
+            break;
+        case "4":
+            vimMode && setCardColor(4);
+            break;
     }
 });
 
@@ -41,5 +53,26 @@ function navigateRight() {
         currentActive.nextElementSibling.classList.add("active");
         currentActive.classList.remove("active");
         activeCardIndex++;
+    }
+}
+
+function setCardColor(colorIndex) {
+    switch (colorIndex) {
+        case 1:
+            document.querySelector(".card.active").style.backgroundColor =
+                "#ffff99";
+            break;
+        case 2:
+            document.querySelector(".card.active").style.backgroundColor =
+                "#ff7eb9";
+            break;
+        case 3:
+            document.querySelector(".card.active").style.backgroundColor =
+                "#7afcff";
+            break;
+        case 4:
+            document.querySelector(".card.active").style.backgroundColor =
+                "#46c45a";
+            break;
     }
 }
