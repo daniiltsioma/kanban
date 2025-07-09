@@ -11,19 +11,37 @@ body {
     font-family: "Hand me down";
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: calc(100vh - 16px);
+}
+
+.column:not(:last-child) {
+    border-right: 2px solid #000;
+}
+
+.column h2 {
+    text-align: center;
+    font-size: 70px;
+    line-height: 60px;
+    margin: 15px 0;
+}
+
 .cards-wrapper {
     display: flex;
     align-items: flex-start;
 }
 
 .card {
-    width: 200px;
-    height: 150px;
+    width: 195px;
+    height: 140px;
     background-color: #ffff99;
     border: 8px solid transparent;
     font-family: "Hand me down";
     font-weight: bold;
     margin-right: 10px;
+    margin-bottom: 10px;
     resize: none;
     pointer-events: none;
     padding: 5px;
