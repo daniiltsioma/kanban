@@ -1,0 +1,16 @@
+.cards-wrapper {
+    display: flex;
+    align-items: flex-start;
+}
+
+.card {
+    width: 200px;
+    height: 150px;
+    background-color: #ffff99;
+    border: 8px solid transparent;
+    margin-right: 10px;
+}
+
+.card.active {
+    border-color: #db482d;
+}
