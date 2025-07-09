@@ -33,11 +33,6 @@ body {
     margin: 15px 0;
 }
 
-.cards-wrapper {
-    display: flex;
-    align-items: flex-start;
-}
-
 .card {
     width: 190px;
     height: 140px;

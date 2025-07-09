@@ -45,6 +45,12 @@ window.addEventListener("keydown", (event) => {
         case "l":
             vimMode && !editingMode && navigateRight();
             break;
+        case "k":
+            vimMode && !editingMode && navigateUp();
+            break;
+        case "j":
+            vimMode && !editingMode && navigateDown();
+            break;
         case "1":
             vimMode &&
                 !editingMode &&
@@ -106,6 +112,42 @@ function navigateRight() {
     if (activeCard.nextElementSibling) {
         activeCard.classList.remove("active");
         activeCard = activeCard.nextElementSibling;
+        activeCard.classList.add("active");
+    }
+}
+
+function navigateUp() {
+    let cardSibling = activeCard.previousElementSibling;
+    const cardOffset = activeCard.getBoundingClientRect();
+    while (
+        cardSibling &&
+        (cardSibling.getBoundingClientRect().top === cardOffset.top ||
+            cardSibling.getBoundingClientRect().left > cardOffset.left)
+    ) {
+        cardSibling = cardSibling.previousElementSibling;
+    }
+
+    if (cardSibling) {
+        activeCard.classList.remove("active");
+        activeCard = cardSibling;
+        activeCard.classList.add("active");
+    }
+}
+
+function navigateDown() {
+    let cardSibling = activeCard.nextElementSibling;
+    const cardOffset = activeCard.getBoundingClientRect();
+    while (
+        cardSibling &&
+        (cardSibling.getBoundingClientRect().top === cardOffset.top ||
+            cardSibling.getBoundingClientRect().left < cardOffset.left)
+    ) {
+        cardSibling = cardSibling.nextElementSibling;
+    }
+
+    if (cardSibling) {
+        activeCard.classList.remove("active");
+        activeCard = cardSibling;
         activeCard.classList.add("active");
     }
 }
