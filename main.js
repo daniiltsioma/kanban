@@ -90,13 +90,15 @@ function handleEscape() {
     if (!vimMode && !editingMode) {
         vimMode = true;
         activeCard = document.querySelector(".card");
-        document.querySelector(".card").classList.add("active");
+        activeCard.classList.add("active");
     } else if (vimMode && !editingMode) {
         vimMode = false;
-        document.querySelector(".card.active").classList.remove("active");
+        activeCard.classList.remove("active");
+        activeCard = null;
     } else if (vimMode && editingMode) {
         editingMode = false;
-        document.querySelector(".card.active").blur();
+        activeCard.classList.remove("input");
+        activeCard.blur();
     }
 }
 
@@ -175,6 +177,7 @@ function setCardColor(colorIndex) {
 
 function enterCardInput() {
     editingMode = true;
+    activeCard.classList.add("input");
     const cardValueLength = activeCard.value.length;
     activeCard.setSelectionRange(cardValueLength, cardValueLength);
     activeCard.focus();

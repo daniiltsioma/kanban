@@ -50,6 +50,10 @@ body {
 }
 
 .card.active {
+    border-color: #000;
+}
+
+.card.active.input {
     border-color: #db482d;
 }
 
