@@ -1,10 +1,11 @@
 let vimMode = false;
+let editingMode = false;
 let activeCardIndex = 0;
 
 window.addEventListener("keydown", (event) => {
     switch (event.key) {
         case "Escape":
-            toggleVimMode();
+            handleEscape();
             break;
         case "h":
             vimMode && navigateLeft();
@@ -13,27 +14,35 @@ window.addEventListener("keydown", (event) => {
             vimMode && navigateRight();
             break;
         case "1":
-            vimMode && setCardColor(1);
+            vimMode && !editingMode && setCardColor(1);
             break;
         case "2":
-            vimMode && setCardColor(2);
+            vimMode && !editingMode && setCardColor(2);
             break;
         case "3":
-            vimMode && setCardColor(3);
+            vimMode && !editingMode && setCardColor(3);
             break;
         case "4":
-            vimMode && setCardColor(4);
+            vimMode && !editingMode && setCardColor(4);
+            break;
+        case "i":
+            event.preventDefault();
+            enterCardInput();
             break;
     }
 });
 
-function toggleVimMode() {
-    vimMode = !vimMode;
-    activeCardIndex = 0;
-    if (vimMode) {
+function handleEscape() {
+    if (!vimMode && !editingMode) {
+        vimMode = true;
+        activeCardIndex = 0;
         document.querySelector(".card").classList.add("active");
-    } else {
+    } else if (vimMode && !editingMode) {
+        vimMode = false;
         document.querySelector(".card.active").classList.remove("active");
+    } else if (vimMode && editingMode) {
+        editingMode = false;
+        document.querySelector(".card.active").blur();
     }
 }
 
@@ -75,4 +84,12 @@ function setCardColor(colorIndex) {
                 "#46c45a";
             break;
     }
+}
+
+function enterCardInput() {
+    editingMode = true;
+    const activeCard = document.querySelector(".card.active");
+    const cardValueLength = activeCard.value.length;
+    activeCard.setSelectionRange(cardValueLength, cardValueLength);
+    activeCard.focus();
 }

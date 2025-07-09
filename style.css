@@ -1,3 +1,16 @@
+@font-face {
+    font-family: "Hand me down";
+    src: url("hand-me-down-brk.ttf");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Hand me down";
+}
+
 .cards-wrapper {
     display: flex;
     align-items: flex-start;
@@ -8,9 +21,19 @@
     height: 150px;
     background-color: #ffff99;
     border: 8px solid transparent;
+    font-family: "Hand me down";
+    font-weight: bold;
     margin-right: 10px;
+    resize: none;
+    pointer-events: none;
+    padding: 5px;
+    font-size: 40px;
 }
 
 .card.active {
     border-color: #db482d;
+}
+
+.card.active:focus {
+    outline: none;
 }
