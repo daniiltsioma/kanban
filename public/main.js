@@ -84,6 +84,28 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
+        case "/":
+            if (keysPressed.has("Meta") && !editingMode) {
+                console.log("create");
+                const card = document.createElement("textarea");
+                card.setAttribute("name", "card");
+                card.setAttribute("rows", "3");
+                card.setAttribute("class", "card");
+                card.setAttribute("tabindex", "-1");
+                card.value = "";
+                todoCards.appendChild(card);
+                if (activeCard) {
+                    activeCard.classList.remove("active");
+                }
+                activeCard = card;
+                editingMode = true;
+                activeCard.classList.add("active");
+                activeCard.classList.add("input");
+                activeCard.focus();
+            }
+            break;
+
         case "Escape":
             handleEscape();
             break;
@@ -124,8 +146,10 @@ window.addEventListener("keydown", (event) => {
                 setCardColor(4);
             break;
         case "i":
-            event.preventDefault();
-            enterCardInput();
+            if (!editingMode) {
+                event.preventDefault();
+                enterCardInput();
+            }
             break;
     }
 });
