@@ -6,7 +6,6 @@ const port = 9255;
 
 const server = http.createServer((req, res) => {
     const filePath = "public" + (req.url === "/" ? "/index.html" : req.url);
-    console.log(filePath);
     let contentType;
 
     if (filePath.endsWith(".html")) {
