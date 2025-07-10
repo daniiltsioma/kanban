@@ -44,6 +44,7 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
         case "Enter":
             // meh, will fix later
             if (keysPressed.has("Meta") && vimMode && !editingMode) {
@@ -55,6 +56,23 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
+        case "Backspace":
+            if (keysPressed.has("Meta") && vimMode && !editingMode) {
+                let nextActiveCard;
+                if (activeCard.previousElementSibling) {
+                    nextActiveCard = activeCard.previousElementSibling;
+                } else if (activeCard.nextElementSibling) {
+                    nextActiveCard = activeCard.nextElementSibling;
+                } else {
+                    nextActiveCard = document.querySelector(".card");
+                }
+                activeCard.remove();
+                activeCard = nextActiveCard;
+                activeCard.classList.add("active");
+            }
+            break;
+
         case "\\":
             if (keysPressed.has("Meta") && vimMode && !editingMode) {
                 event.preventDefault();
@@ -66,6 +84,28 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
+        case "/":
+            if (keysPressed.has("Meta") && !editingMode) {
+                console.log("create");
+                const card = document.createElement("textarea");
+                card.setAttribute("name", "card");
+                card.setAttribute("rows", "3");
+                card.setAttribute("class", "card");
+                card.setAttribute("tabindex", "-1");
+                card.value = "";
+                todoCards.appendChild(card);
+                if (activeCard) {
+                    activeCard.classList.remove("active");
+                }
+                activeCard = card;
+                editingMode = true;
+                activeCard.classList.add("active");
+                activeCard.classList.add("input");
+                activeCard.focus();
+            }
+            break;
+
         case "Escape":
             handleEscape();
             break;
@@ -106,8 +146,10 @@ window.addEventListener("keydown", (event) => {
                 setCardColor(4);
             break;
         case "i":
-            event.preventDefault();
-            enterCardInput();
+            if (!editingMode) {
+                event.preventDefault();
+                enterCardInput();
+            }
             break;
     }
 });
