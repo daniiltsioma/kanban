@@ -44,6 +44,7 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
         case "Enter":
             // meh, will fix later
             if (keysPressed.has("Meta") && vimMode && !editingMode) {
@@ -55,6 +56,23 @@ window.addEventListener("keydown", (event) => {
                 }
             }
             break;
+
+        case "Backspace":
+            if (keysPressed.has("Meta") && vimMode && !editingMode) {
+                let nextActiveCard;
+                if (activeCard.previousElementSibling) {
+                    nextActiveCard = activeCard.previousElementSibling;
+                } else if (activeCard.nextElementSibling) {
+                    nextActiveCard = activeCard.nextElementSibling;
+                } else {
+                    nextActiveCard = document.querySelector(".card");
+                }
+                activeCard.remove();
+                activeCard = nextActiveCard;
+                activeCard.classList.add("active");
+            }
+            break;
+
         case "\\":
             if (keysPressed.has("Meta") && vimMode && !editingMode) {
                 event.preventDefault();
