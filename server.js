@@ -7,6 +7,7 @@ const port = 9255;
 const server = http.createServer((req, res) => {
     const filePath = "public" + (req.url === "/" ? "/index.html" : req.url);
     let contentType;
+    console.log(filePath);
 
     if (filePath.endsWith(".html")) {
         contentType = "text/html";
@@ -16,6 +17,8 @@ const server = http.createServer((req, res) => {
         contentType = "text/javascript";
     } else if (filePath.endsWith(".ttf")) {
         contentType = "font/ttf";
+    } else if (filePath.endsWith(".ico")) {
+        contentType = "image/vnd.microsoft.icon";
     } else {
         contentType = "text/plain";
     }
