@@ -4,6 +4,8 @@ const todoCards = document.querySelector(".column.todo .cards");
 const doingCards = document.querySelector(".column.doing .cards");
 const doneCards = document.querySelector(".column.done .cards");
 
+readFromLocalStorage();
+
 let vimMode = false;
 let editingMode = false;
 let activeCard = null;
@@ -129,6 +131,7 @@ function handleEscape() {
         activeCard.classList.remove("input");
         activeCard.blur();
     }
+    saveToLocalStorage();
 }
 
 function navigateLeft() {
@@ -210,4 +213,56 @@ function enterCardInput() {
     const cardValueLength = activeCard.value.length;
     activeCard.setSelectionRange(cardValueLength, cardValueLength);
     activeCard.focus();
+}
+
+function readFromLocalStorage() {
+    const localTasksJSON = localStorage.getItem("tasks");
+    if (!localTasksJSON) return;
+    const localTasks = JSON.parse(localTasksJSON);
+    for (const task of localTasks.todo) {
+        const card = document.createElement("textarea");
+        card.setAttribute("name", "card");
+        card.setAttribute("rows", "3");
+        card.setAttribute("class", "card");
+        card.setAttribute("tabindex", "-1");
+        card.value = task;
+        todoCards.appendChild(card);
+    }
+    for (const task of localTasks.doing) {
+        const card = document.createElement("textarea");
+        card.setAttribute("name", "card");
+        card.setAttribute("rows", "3");
+        card.setAttribute("class", "card");
+        card.setAttribute("tabindex", "-1");
+        card.value = task;
+        doingCards.appendChild(card);
+    }
+    for (const task of localTasks.done) {
+        const card = document.createElement("textarea");
+        card.setAttribute("name", "card");
+        card.setAttribute("rows", "3");
+        card.setAttribute("class", "card");
+        card.setAttribute("tabindex", "-1");
+        card.value = task;
+        doneCards.appendChild(card);
+    }
+}
+
+function saveToLocalStorage() {
+    console.log("save");
+    const tasks = {
+        todo: [],
+        doing: [],
+        done: [],
+    };
+    for (const child of todoCards.children) {
+        tasks.todo.push(child.value);
+    }
+    for (const child of doingCards.children) {
+        tasks.doing.push(child.value);
+    }
+    for (const child of doneCards.children) {
+        tasks.done.push(child.value);
+    }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
